@@ -1006,7 +1006,7 @@ img {
     gap: 2rem;
   }
   .cat-layout {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
   .cat-sidebar {
@@ -1185,7 +1185,7 @@ img {
 
   /* --- CATEGORY PAGE --- */
   .cat-layout {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 0;
     padding: 2rem 0;
   }
