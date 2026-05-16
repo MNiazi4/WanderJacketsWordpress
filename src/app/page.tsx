@@ -1,4 +1,4 @@
-import { getProducts, getCategories } from "@/lib/woocommerce";
+import { getProducts, getCategories, getBestSellers } from "@/lib/woocommerce";
 import { Star, Truck, ShieldCheck, ThumbsUp, User } from "lucide-react";
 import CustomOrderForm from "@/components/CustomOrderForm";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import ProductCard from "@/components/ProductCard";
 export const revalidate = 60;
 
 export default async function Home() {
-  const products = await getProducts();
+  const bestSellers = await getBestSellers();
 
   return (
     <div>
@@ -83,15 +83,15 @@ export default async function Home() {
           <div className="trust-grid">
             <div className="trust-item">
               <div className="trust-icon"><User size={30} /></div>
-              <div className="trust-text">120,000+ CUSTOMERS</div>
+              <div className="trust-text">12,000+ CUSTOMERS</div>
             </div>
             <div className="trust-item">
               <div className="trust-icon"><Truck size={30} /></div>
-              <div className="trust-text">150,000+ ORDERS</div>
+              <div className="trust-text">15,000+ ORDERS</div>
             </div>
             <div className="trust-item">
               <div className="trust-icon"><Star size={30} /></div>
-              <div className="trust-text">12,000+ 5-STAR REVIEWS</div>
+              <div className="trust-text">9,000+ 5-STAR REVIEWS</div>
             </div>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default async function Home() {
         <div className="container">
           <h2 className="section-title">Our Best Sellers</h2>
           <div className="product-grid">
-            {products.map((product: any) => (
+            {bestSellers.map((product: any) => (
               <ProductCard product={product} key={product.id} />
             ))}
           </div>

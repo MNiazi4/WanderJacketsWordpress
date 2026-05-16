@@ -686,6 +686,7 @@ img {
   color: #333;
   border-radius: 2px;
   outline: none;
+  align-content: center;
 }
 
 .form-row input:focus, .form-row select:focus, .form-full textarea:focus {
@@ -699,9 +700,7 @@ img {
   align-items: center;
 }
 
-/* =========================================
-   CATEGORY HERO BANNER
-========================================= */
+
 .cat-hero {
   position: relative;
   height: 380px;
@@ -767,10 +766,49 @@ img {
   }
 }
 @media (max-width: 768px) {
-  .hero-title { font-size: 3rem; }
+  .container { padding: 0 1rem; }
+  .hero-title { font-size: 2.8rem; }
+  .section-pad { padding: 4rem 0; }
+  .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
   .nav-links { display: none; }
   .why-item { flex-direction: column; }
   .why-img, .why-text { width: 100%; }
+  
+  .cat-grid { gap: 1.5rem; }
+  .cat-box { width: 100px; }
+  .cat-title { font-size: 0.75rem; }
+  
+  /* Custom Order Responsive */
+  .custom-order-grid {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .custom-order-text h2 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .custom-order-form div[style*="text-align: right"] {
+    text-align: center !important;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2.2rem; }
+  .footer-grid { grid-template-columns: 1fr; text-align: center; }
+  .footer-subscribe { margin-top: 1rem; }
+  .cat-grid { gap: 1rem; }
 }
 
 /* CART SIDEBAR */
