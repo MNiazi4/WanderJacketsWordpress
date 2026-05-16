@@ -764,15 +764,14 @@ img {
    LAYOUT CLASSES (Responsive replacements for inline styles)
 ========================================= */
 .cat-layout {
-  display: flex;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
   padding: 4rem 0;
-  align-items: flex-start;
+  align-items: start;
 }
 
 .cat-sidebar {
-  width: 250px;
-  flex-shrink: 0;
   position: sticky;
   top: 100px;
 }
