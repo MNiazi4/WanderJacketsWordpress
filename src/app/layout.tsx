@@ -82,7 +82,10 @@ export default async function RootLayout({
               <div className="footer-bottom">
                 <div>© 2026 Wanderjackets. Copyright 2026 Wanderjackets - All Rights Reserved.</div>
                 <div className="payment-icons">
-                  <span style={{color: "#fff", padding: "2px 6px", borderRadius: "2px", fontSize: "10px", fontWeight: "medium", href: "https://deimos-tech.com"}}>Made by @Deimos-tech</span>        
+                  <span style={{background: "#fff", color: "#000", padding: "2px 6px", borderRadius: "2px", fontSize: "10px", fontWeight: "bold"}}>VISA</span>
+                  <span style={{background: "#fff", color: "#000", padding: "2px 6px", borderRadius: "2px", fontSize: "10px", fontWeight: "bold"}}>MC</span>
+                  <span style={{background: "#fff", color: "#000", padding: "2px 6px", borderRadius: "2px", fontSize: "10px", fontWeight: "bold"}}>AMEX</span>
+                  <span style={{background: "#fff", color: "#000", padding: "2px 6px", borderRadius: "2px", fontSize: "10px", fontWeight: "bold"}}>PAYPAL</span>
                 </div>
               </div>
             </div>
