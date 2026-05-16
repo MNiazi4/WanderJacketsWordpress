@@ -1,4 +1,4 @@
-import { getBestSellers, getCategories } from "@/lib/woocommerce";
+import { getBestSellers } from "@/lib/woocommerce";
 import { Star, Truck, User } from "lucide-react";
 import CustomOrderForm from "@/components/CustomOrderForm";
 import Link from "next/link";
@@ -6,32 +6,60 @@ import ProductCard from "@/components/ProductCard";
 
 export const revalidate = 60;
 
-// Fallback images per category slug if WooCommerce has no image
-const CAT_FALLBACKS: Record<string, string> = {
-  jackets: "/jacketg.jpg",
-  purses: "/pursesg.jpg",
-  backpacks: "/bagsg.png",
-  accessories: "/accecosries.png",
-  belts: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=200&auto=format&fit=crop",
-  men: "https://images.unsplash.com/photo-1489987707023-afc824781ef1?q=80&w=200&auto=format&fit=crop",
-  women: "https://images.unsplash.com/photo-1559582798-678dfc71caa4?q=80&w=200&auto=format&fit=crop",
-  default: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=200&auto=format&fit=crop",
-};
+// The 6 curated collection items shown in "Our Collection"
+const COLLECTIONS = [
+  {
+    id: 1,
+    title: "Leather Jackets",
+    subtitle: "Biker • Bomber • Café Racer",
+    href: "/category/jackets",
+    img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop",
+    span: "large",
+  },
+  {
+    id: 2,
+    title: "Backpacks",
+    subtitle: "Handcrafted. Built to last.",
+    href: "/category/backpacks",
+    img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
+    span: "small",
+  },
+  {
+    id: 3,
+    title: "Purses",
+    subtitle: "Elegant everyday carry.",
+    href: "/category/purses",
+    img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop",
+    span: "small",
+  },
+  {
+    id: 4,
+    title: "Belts",
+    subtitle: "Full-grain. Perfectly finished.",
+    href: "/category/belts",
+    img: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=800&auto=format&fit=crop",
+    span: "small",
+  },
+  {
+    id: 5,
+    title: "Accessories",
+    subtitle: "Wallets, keychains & more.",
+    href: "/category/accessories",
+    img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+    span: "small",
+  },
+  {
+    id: 6,
+    title: "Custom Orders",
+    subtitle: "Your vision. Our craft.",
+    href: "#custom-order",
+    img: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800&auto=format&fit=crop",
+    span: "large",
+  },
+];
 
 export default async function Home() {
   const bestSellers = await getBestSellers();
-  const allCategories = await getCategories();
-
-  // Only show top-level categories (no subcategories), excluding "Uncategorized"
-  const topLevelCats = allCategories
-    .filter((c: any) => c.parent === 0 && c.slug !== "uncategorized" && c.count > 0)
-    .slice(0, 11); // max 11 so there's room for Custom Order
-
-  // Always append Custom Order
-  const displayCats = [
-    ...topLevelCats,
-    { id: "custom", name: "Custom Order", slug: "#custom-order", images: [{ src: "/custom.png" }] },
-  ];
 
   return (
     <div>
@@ -42,35 +70,39 @@ export default async function Home() {
         <div className="container">
           <div className="hero-content">
             <h1 className="hero-title">Leather. Made for You</h1>
-            <p className="hero-subtitle">Luxurious yet sustainable leather jackets, where softness, durability, and affordable elegance elevate every moment.</p>
+            <p className="hero-subtitle">
+              Luxurious yet sustainable leather goods, where softness, durability,
+              and affordable elegance elevate every moment.
+            </p>
             <div className="hero-buttons">
-              <Link href="/category/men" className="btn btn-light" style={{display: "inline-block"}}>Shop Men</Link>
-              <Link href="/category/women" className="btn btn-dark" style={{display: "inline-block"}}>Shop Women</Link>
+              <Link href="/category/men" className="btn btn-light">Shop Men</Link>
+              <Link href="/category/women" className="btn btn-dark">Shop Women</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CATEGORY BOXES — Dynamic from WooCommerce top-level categories */}
-      <section className="category-boxes">
+      {/* OUR COLLECTION */}
+      <section className="section-pad collection-section">
         <div className="container">
-          <div className="cat-grid">
-            {displayCats.map((cat: any) => {
-              const imgSrc =
-                cat.image?.src ||
-                cat.images?.[0]?.src ||
-                CAT_FALLBACKS[cat.slug] ||
-                CAT_FALLBACKS.default;
-              const href = cat.slug === "#custom-order" ? "#custom-order" : `/category/${cat.slug}`;
-              return (
-                <Link href={href} className="cat-box" key={cat.id}>
-                  <div className="cat-img-wrap">
-                    <img src={imgSrc} alt={cat.name} style={{ borderRadius: "5px" }} />
-                  </div>
-                  <div className="cat-title">{cat.name}</div>
-                </Link>
-              );
-            })}
+          <h2 className="section-title">Our Collection</h2>
+          <p className="section-subtitle">Premium leather goods, handcrafted with care.</p>
+          <div className="collection-grid">
+            {COLLECTIONS.map((item) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className={`collection-card${item.span === "large" ? " collection-card--large" : ""}`}
+              >
+                <img src={item.img} alt={item.title} className="collection-card__img" />
+                <div className="collection-card__overlay"></div>
+                <div className="collection-card__content">
+                  <span className="collection-card__subtitle">{item.subtitle}</span>
+                  <h3 className="collection-card__title">{item.title}</h3>
+                  <span className="collection-card__cta">Explore →</span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -112,7 +144,7 @@ export default async function Home() {
         <div className="container">
           <div className="custom-order-grid">
             <div className="custom-order-text">
-              <h2>Create Your<br/>Custom<br/>Leather<br/>Jackets</h2>
+              <h2>Create Your<br />Custom<br />Leather<br />Jacket</h2>
             </div>
             <div className="custom-order-form-wrapper">
               <CustomOrderForm />
@@ -132,7 +164,7 @@ export default async function Home() {
               <img className="why-img" src="https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?q=80&w=500&auto=format&fit=crop" alt="Premium Raw Materials" />
               <div className="why-text">
                 <h3>Premium Raw Materials</h3>
-                <p>From premium natural leather to premium YKK zippers, enjoy excellent craftsmanship that begins with only the highest class of materials.</p>
+                <p>From premium natural leather to YKK zippers, enjoy excellent craftsmanship that begins with only the highest class of materials.</p>
               </div>
             </div>
             <div className="why-item">
@@ -146,31 +178,16 @@ export default async function Home() {
               <img className="why-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=500&auto=format&fit=crop" alt="Workshop to You" />
               <div className="why-text">
                 <h3>Workshop to You</h3>
-                <p>We provide luxury products directly to you, so there's no extra expense or middleman markup.</p>
+                <p>We provide luxury products directly to you, so there is no extra expense or middleman markup.</p>
               </div>
             </div>
             <div className="why-item">
-              <img className="why-img" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop" alt="Tailored For you" />
+              <img className="why-img" src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop" alt="Tailored For You" />
               <div className="why-text">
-                <h3>Tailored For you</h3>
-                <p>All of our handcrafted jackets are available in custom sizes and ready to wear right out of the box.</p>
+                <h3>Tailored For You</h3>
+                <p>All of our handcrafted products are available in custom sizes and ready to wear right out of the box.</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BLOG INSIGHTS */}
-      <section className="section-pad">
-        <div className="container">
-          <h2 className="section-title">Wanderjackets Insights</h2>
-          <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center", color: "#666" }}>
-            <p style={{ marginBottom: "1rem" }}>
-              Welcome to the Wanderjackets journal. Here you will find our latest thoughts, styling guides, and deep dives into the world of premium leather craftsmanship. Leather is more than just a material; it is a lifestyle, a statement of enduring quality that only gets better with time. 
-            </p>
-            <p>
-              Whether you are looking for tips on how to condition your vintage biker jacket or exploring the differences between top-grain and full-grain hides, our experts share their knowledge to help you make informed decisions and keep your wardrobe looking immaculate for decades to come.
-            </p>
           </div>
         </div>
       </section>
