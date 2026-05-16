@@ -109,11 +109,11 @@ export default async function CategoryPage({ params }: { params: { slug: string 
 
         {/* Products Grid */}
         <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "3rem", borderBottom: "1px solid #E5E5E5", paddingBottom: "1rem" }}>
-            <h2 style={{ fontSize: "1.5rem", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 600 }}>{title}</h2>
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <span style={{ fontSize: "0.85rem", color: "#666" }}>Showing {products.length} results</span>
-              <select style={{ padding: "0.8rem 1.2rem", border: "1px solid #E5E5E5", background: "white", fontSize: "0.9rem", outline: "none", cursor: "pointer" }}>
+          <div className="cat-header-row">
+            <h2>{title}</h2>
+            <div className="cat-header-actions">
+              <span className="results-count">Showing {products.length} results</span>
+              <select className="sort-select">
                 <option>Sort by: Recommended</option>
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>
