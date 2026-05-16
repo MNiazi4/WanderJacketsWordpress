@@ -60,7 +60,7 @@ img {
 
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -765,7 +765,7 @@ img {
 ========================================= */
 .cat-layout {
   display: flex;
-  gap: 4rem;
+  gap: 2rem;
   padding: 4rem 0;
   align-items: flex-start;
 }
