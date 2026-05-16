@@ -1,8 +1,9 @@
-import { getProducts, getCategories, getBestSellers } from "@/lib/woocommerce";
-import { Star, Truck, ShieldCheck, ThumbsUp, User } from "lucide-react";
+import { getBestSellers } from "@/lib/woocommerce";
+import { Star, Truck, User } from "lucide-react";
 import CustomOrderForm from "@/components/CustomOrderForm";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+
 
 export const revalidate = 60;
 
