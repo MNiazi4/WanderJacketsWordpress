@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, Heart, ShoppingBag, ChevronDown, Menu, X } from "lucide-react";
+import { Search, User, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 
@@ -21,15 +21,22 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
       <div className="top-bar">
         FREE LIFETIME GUARANTEE ON ALL LEATHER PRODUCTS
       </div>
+
+      {/* Main header row: hamburger | logo | icons */}
       <div className="container">
         <div className="header-main">
-          <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button
+            className="mobile-menu-toggle"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           
           <Link href="/" className="logo">Wander<span>jackets</span></Link>
           
-          <nav className={`nav-links ${isMenuOpen ? 'mobile-active' : ''}`}>
+          {/* Desktop nav — hidden on mobile via CSS */}
+          <nav className="nav-links desktop-nav">
             <div className="nav-item">
               <Link href="/category/women">Women</Link>
               <div className="mega-menu">
@@ -42,7 +49,7 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
                       ))}
                       {womenSubCats.length === 0 && (
                         <>
-                          <li><Link href="/category/leather-skirts">Leather Skirts & Trousers</Link></li>
+                          <li><Link href="/category/leather-skirts">Leather Skirts &amp; Trousers</Link></li>
                           <li><Link href="/category/suede-jackets">Suede Jackets</Link></li>
                         </>
                       )}
@@ -64,7 +71,7 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
               <div className="mega-menu">
                 <div className="container mega-menu-inner">
                   <div className="mega-col">
-                    <h4>Jackets & Coats</h4>
+                    <h4>Jackets &amp; Coats</h4>
                     <ul>
                       {menSubCats.slice(0, 8).map((cat) => (
                         <li key={cat.id}><Link href={`/category/${cat.slug}`}>{cat.name}</Link></li>
@@ -83,12 +90,6 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
                       {menSubCats.slice(8, 16).map((cat) => (
                         <li key={cat.id}><Link href={`/category/${cat.slug}`}>{cat.name}</Link></li>
                       ))}
-                      {menSubCats.length <= 8 && (
-                        <>
-                          <li><Link href="/category/biker">Biker</Link></li>
-                          <li><Link href="/category/bomber">Bomber</Link></li>
-                        </>
-                      )}
                     </ul>
                   </div>
                   <div className="mega-col mega-featured">
@@ -120,6 +121,18 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
           </div>
         </div>
       </div>
+
+      {/* Mobile nav — renders below header row, full width */}
+      {isMenuOpen && (
+        <nav className="mobile-nav-drawer">
+          <Link href="/category/women" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Women</Link>
+          <Link href="/category/men" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Men</Link>
+          <Link href="/category/jackets" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Bags</Link>
+          <Link href="/category/accessories" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Accessories</Link>
+          <Link href="/#custom-order" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Custom Order</Link>
+          <Link href="/category/backpacks" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Outlet</Link>
+        </nav>
+      )}
     </header>
   );
 }
