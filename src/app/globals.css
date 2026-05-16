@@ -686,7 +686,6 @@ img {
   color: #333;
   border-radius: 2px;
   outline: none;
-  align-content: center;
 }
 
 .form-row input:focus, .form-row select:focus, .form-full textarea:focus {
