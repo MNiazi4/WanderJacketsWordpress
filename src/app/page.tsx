@@ -1,14 +1,37 @@
-import { getBestSellers } from "@/lib/woocommerce";
+import { getBestSellers, getCategories } from "@/lib/woocommerce";
 import { Star, Truck, User } from "lucide-react";
 import CustomOrderForm from "@/components/CustomOrderForm";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 
-
 export const revalidate = 60;
+
+// Fallback images per category slug if WooCommerce has no image
+const CAT_FALLBACKS: Record<string, string> = {
+  jackets: "/jacketg.jpg",
+  purses: "/pursesg.jpg",
+  backpacks: "/bagsg.png",
+  accessories: "/accecosries.png",
+  belts: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=200&auto=format&fit=crop",
+  men: "https://images.unsplash.com/photo-1489987707023-afc824781ef1?q=80&w=200&auto=format&fit=crop",
+  women: "https://images.unsplash.com/photo-1559582798-678dfc71caa4?q=80&w=200&auto=format&fit=crop",
+  default: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=200&auto=format&fit=crop",
+};
 
 export default async function Home() {
   const bestSellers = await getBestSellers();
+  const allCategories = await getCategories();
+
+  // Only show top-level categories (no subcategories), excluding "Uncategorized"
+  const topLevelCats = allCategories
+    .filter((c: any) => c.parent === 0 && c.slug !== "uncategorized" && c.count > 0)
+    .slice(0, 11); // max 11 so there's room for Custom Order
+
+  // Always append Custom Order
+  const displayCats = [
+    ...topLevelCats,
+    { id: "custom", name: "Custom Order", slug: "#custom-order", images: [{ src: "/custom.png" }] },
+  ];
 
   return (
     <div>
@@ -28,52 +51,26 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CATEGORY BOXES */}
+      {/* CATEGORY BOXES — Dynamic from WooCommerce top-level categories */}
       <section className="category-boxes">
         <div className="container">
           <div className="cat-grid">
-            {/* Strictly Curated Collections */}
-            <Link href="/category/jackets" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="/jacketg.jpg" alt="Jackets" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Jackets</div>
-            </Link>
-            
-            <Link href="/category/purses" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="/pursesg.jpg" alt="Purses" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Purses</div>
-            </Link>
-
-            <Link href="/category/backpacks" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="/bagsg.png" alt="Backpacks" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Backpacks</div>
-            </Link>
-
-            <Link href="/category/accessories" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="/accecosries.png" alt="Accessories" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Accessories</div>
-            </Link>
-
-            <Link href="/category/belts" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=200&auto=format&fit=crop" alt="Belts" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Belts</div>
-            </Link>
-            
-            <Link href="#custom-order" className="cat-box">
-              <div className="cat-img-wrap">
-                <img src="/custom.png" alt="Custom Order" style={{ borderRadius: '5px' }} />
-              </div>
-              <div className="cat-title">Custom Order</div>
-            </Link>
+            {displayCats.map((cat: any) => {
+              const imgSrc =
+                cat.image?.src ||
+                cat.images?.[0]?.src ||
+                CAT_FALLBACKS[cat.slug] ||
+                CAT_FALLBACKS.default;
+              const href = cat.slug === "#custom-order" ? "#custom-order" : `/category/${cat.slug}`;
+              return (
+                <Link href={href} className="cat-box" key={cat.id}>
+                  <div className="cat-img-wrap">
+                    <img src={imgSrc} alt={cat.name} style={{ borderRadius: "5px" }} />
+                  </div>
+                  <div className="cat-title">{cat.name}</div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
