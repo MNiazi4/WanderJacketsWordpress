@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Link from "next/link";
 import { Search, User, Heart, ShoppingBag } from "lucide-react";
@@ -10,6 +10,11 @@ import { getCategories } from "@/lib/woocommerce";
 export const metadata: Metadata = {
   title: "Wanderjackets | Leather. Made for You",
   description: "Luxurious yet sustainable leather jackets, where softness, durability, and affordable elegance elevate every moment.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export const revalidate = 60;

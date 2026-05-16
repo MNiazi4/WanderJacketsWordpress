@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, Heart, ShoppingBag, ChevronDown } from "lucide-react";
+import { Search, User, Heart, ShoppingBag, ChevronDown, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useState } from "react";
 
 export default function Header({ categories = [] }: { categories?: any[] }) {
   const { cart, setIsCartOpen } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   const menCat = categories.find(c => c.slug === 'men');
@@ -21,9 +23,13 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
       </div>
       <div className="container">
         <div className="header-main">
+          <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          
           <Link href="/" className="logo">Wander<span>jackets</span></Link>
           
-          <nav className="nav-links">
+          <nav className={`nav-links ${isMenuOpen ? 'mobile-active' : ''}`}>
             <div className="nav-item">
               <Link href="/category/women">Women</Link>
               <div className="mega-menu">

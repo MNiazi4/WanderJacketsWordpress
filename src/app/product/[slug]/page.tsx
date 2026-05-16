@@ -22,7 +22,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
         </div>
       </div>
 
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', paddingBottom: '5rem' }}>
+      <div className="container product-layout">
         
         {/* LEFT: IMAGE GALLERY */}
         <div className="product-gallery">
@@ -55,7 +55,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
       {/* DESCRIPTION TABS */}
       <section className="section-pad" style={{ borderTop: '1px solid #eee' }}>
         <div className="container">
-          <div style={{ display: 'flex', gap: '3rem', borderBottom: '1px solid #eee', marginBottom: '3rem' }}>
+          <div className="product-tabs">
             <div style={{ paddingBottom: '1rem', borderBottom: '2px solid #111', fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>Description</div>
             <div style={{ paddingBottom: '1rem', color: '#999', fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>Specifications</div>
             <div style={{ paddingBottom: '1rem', color: '#999', fontWeight: 700, textTransform: 'uppercase', cursor: 'pointer' }}>Shipping & Returns</div>

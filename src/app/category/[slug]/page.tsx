@@ -61,10 +61,10 @@ export default async function CategoryPage({ params }: { params: { slug: string 
       </section>
 
       {/* PRODUCTS + SIDEBAR */}
-      <div className="container" style={{ display: "flex", gap: "4rem", padding: "4rem 2rem", alignItems: "flex-start" }}>
+      <div className="container cat-layout">
 
         {/* Sidebar */}
-        <aside style={{ width: "250px", flexShrink: 0, position: "sticky", top: "100px" }}>
+        <aside className="cat-sidebar">
           <h3 style={{ borderBottom: "1px solid #E5E5E5", paddingBottom: "1rem", marginBottom: "2rem", fontSize: "1.2rem", textTransform: "uppercase", letterSpacing: "1px" }}>Filters</h3>
 
           {sidebarCats.length > 0 && (
