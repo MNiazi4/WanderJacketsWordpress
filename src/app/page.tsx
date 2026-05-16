@@ -45,7 +45,7 @@ const COLLECTIONS = [
     title: "Accessories",
     subtitle: "Wallets, keychains & more.",
     href: "/category/accessories",
-    img: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+    img: "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=800&auto=format&fit=crop",
     span: "small",
   },
   {

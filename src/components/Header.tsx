@@ -100,9 +100,6 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
             </div>
             
             <div className="nav-item">Bags</div>
-            <div className="nav-item">Gifting</div>
-            <div className="nav-item">Discover</div>
-            <div className="nav-item">Outlet</div>
           </nav>
 
           <div className="header-icons">
@@ -130,7 +127,6 @@ export default function Header({ categories = [] }: { categories?: any[] }) {
           <Link href="/category/jackets" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Bags</Link>
           <Link href="/category/accessories" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Accessories</Link>
           <Link href="/#custom-order" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Custom Order</Link>
-          <Link href="/category/backpacks" className="mobile-nav-item" onClick={() => setIsMenuOpen(false)}>Outlet</Link>
         </nav>
       )}
     </header>
